@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Lifting Log</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <!-- Lightweight library to read FitNotes CSV files -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Workout Tracker</h1>
+    
+    <div class="card">
+      <input type="date" id="dateInput">
+      
+      <select id="exerciseInput">
+        <option value="Squat">Squat</option>
+        <option value="Bench Press">Bench Press</option>
+        <option value="Traditional Deadlift">Traditional Deadlift</option>
+        <option value="Trap Bar Deadlift">Trap Bar Deadlift</option>
+        <option value="Indoor Rowing">Indoor Rowing</option>
+      </select>
+
+      <select id="setType">
+        <option value="Base Set">Base Set</option>
+        <option value="Volume Set">Volume Set</option>
+        <option value="Cardio">Cardio / Time</option>
+      </select>
+
+      <div class="row">
+        <input type="number" id="weightInput" placeholder="Weight (lbs)">
+        <input type="number" id="repsInput" placeholder="Reps">
+      </div>
+      
+      <button onclick="logSet()" class="btn-primary">Log Set</button>
+    </div>
+
+    <div class="card">
+      <h2>Recent Sets</h2>
+      <ul id="historyList"></ul>
+    </div>
+
+    <div class="card data-management">
+      <h3>Data Management</h3>
+      <button onclick="exportFitNotesCSV()">Export to FitNotes</button>
+      <input type="file" id="csvFileInput" accept=".csv" />
+      <button onclick="importFitNotesCSV()">Import CSV</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
