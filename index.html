@@ -6,27 +6,31 @@
   <title>Lifting Log</title>
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
-  <!-- Lightweight library to read FitNotes CSV files -->
+  
+  <!-- Data Parsing Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/sql-wasm.js"></script>
 </head>
 <body>
   <div class="container">
     <h1>Workout Tracker</h1>
     
+    <!-- Logging Section -->
     <div class="card">
       <input type="date" id="dateInput">
       
       <select id="exerciseInput">
+        <option value="Trap Bar Deadlift">Trap Bar Deadlift</option>
         <option value="Squat">Squat</option>
         <option value="Bench Press">Bench Press</option>
         <option value="Traditional Deadlift">Traditional Deadlift</option>
-        <option value="Trap Bar Deadlift">Trap Bar Deadlift</option>
         <option value="Indoor Rowing">Indoor Rowing</option>
       </select>
 
       <select id="setType">
-        <option value="Base Set">Base Set</option>
-        <option value="Volume Set">Volume Set</option>
+        <option value="Base Set">GG Base Set (T1/T2)</option>
+        <option value="Volume Set">GG Volume Set (Half-sets)</option>
         <option value="Cardio">Cardio / Time</option>
       </select>
 
@@ -38,16 +42,45 @@
       <button onclick="logSet()" class="btn-primary">Log Set</button>
     </div>
 
+    <!-- Metrics Dashboard -->
+    <div class="card">
+      <h2>Performance Metrics</h2>
+      <select id="metricExercise" onchange="updateMetrics()">
+        <option value="Trap Bar Deadlift">Trap Bar Deadlift</option>
+        <option value="Squat">Squat</option>
+        <option value="Bench Press">Bench Press</option>
+        <option value="Traditional Deadlift">Traditional Deadlift</option>
+      </select>
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <span class="metric-label">Est. 1RM</span>
+          <span class="metric-value" id="metric1RM">--</span>
+        </div>
+        <div class="metric-box">
+          <span class="metric-label">Max Weight</span>
+          <span class="metric-value" id="metricMax">--</span>
+        </div>
+        <div class="metric-box">
+          <span class="metric-label">30-Day Vol.</span>
+          <span class="metric-value" id="metricVol">--</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- History Section -->
     <div class="card">
       <h2>Recent Sets</h2>
       <ul id="historyList"></ul>
     </div>
 
+    <!-- Data Management -->
     <div class="card data-management">
       <h3>Data Management</h3>
-      <button onclick="exportFitNotesCSV()">Export to FitNotes</button>
-      <input type="file" id="csvFileInput" accept=".csv" />
-      <button onclick="importFitNotesCSV()">Import CSV</button>
+      <input type="file" id="fileInput" accept=".csv, .fitnotes" onchange="importData(event)" />
+      <div class="row" style="margin-top: 10px;">
+        <button onclick="exportFitNotesCSV()">Export CSV</button>
+        <button onclick="clearData()" style="background-color: #ef4444;">Clear DB</button>
+      </div>
     </div>
   </div>
 
